@@ -6,21 +6,17 @@ NETWORK_SETUP="172.38.0.0/16"
 GATEWAY_SETUP="172.38.0.1"
 DNS_IP="172.38.0.2"
 
+IMAGE_TO_USE="registry.gitlab.com/arm-research/smarter/smarter-dnsmasq:0.1"
+
 case `uname -m` in
 	aarch64)
 		ARCHITECTURE="arm64v8";
-		FILE_TO_LOAD_IMAGE=arm64v8_dnsmasq-0.1.tar.gz
-		IMAGE_TO_USE="arm64v8/dnsmasq:0.1"
 		;;
 	armv7l)
 		ARCHITECTURE="arm32v6";
-		FILE_TO_LOAD_IMAGE=arm32v6_dnsmasq-0.1.tar.gz
-		IMAGE_TO_USE="arm32v6/dnsmasq:0.1"
 		;;
 	x86_64)
 		ARCHITECTURE="amd64"
-		FILE_TO_LOAD_IMAGE=dnsmasq-0.1.tar.gz
-		IMAGE_TO_USE="dnsmasq:0.1"
 		;;
 	*)
 		echo "I do not recognize the architecture of the machine "`uname -m`
