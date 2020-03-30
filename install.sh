@@ -8,22 +8,6 @@ DNS_IP="172.38.0.2"
 
 IMAGE_TO_USE="registry.gitlab.com/arm-research/smarter/smarter-dnsmasq:0.1"
 
-case `uname -m` in
-	aarch64)
-		ARCHITECTURE="arm64v8";
-		;;
-	armv7l)
-		ARCHITECTURE="arm32v6";
-		;;
-	x86_64)
-		ARCHITECTURE="amd64"
-		;;
-	*)
-		echo "I do not recognize the architecture of the machine "`uname -m`
-		exit 1
-		;;
-esac
-
 
 apt-get -y install jq
 mkdir -p /etc/cni/net.d
@@ -31,9 +15,12 @@ cd cni
 cp c2d.conf /etc/cni/net.d
 mkdir -p /opt/cni/bin
 cp c2d c2d-inner /opt/cni/bin
-cp ../${ARCHITECTURE}/loopback /opt/cni/bin
+
 cd ..
-chmod a+x /opt/cni/bin/c2d /opt/cni/bin/c2d-inner /opt/cni/bin/loopback
+chmod a+x /opt/cni/bin/c2d /opt/cni/bin/c2d-inner 
+
+./install_loopback.sh
+
 cat <<EOF | tee /usr/bin/cni-iot-start
 #!/bin/bash
 
