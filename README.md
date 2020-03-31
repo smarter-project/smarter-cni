@@ -24,10 +24,9 @@ Docker provides an automatically enabled, embedded DNS resolver (127.0.0.11) for
 
 We use dnsmasq running in a docker container (named **mydns**) to provide the facility for pods that use host-networking to find a deployed pod by name.
 
-The container image is pulled from the public registry: ```registry.gitlab.com/arm-research/smarter/smarter-dnsmasq:v0.5.1```
+The container image is pulled from the public registry: ```registry.gitlab.com/arm-research/smarter/smarter-dnsmasq/smarter-dnsmasq:v0.5.1```
 
-
-Instructions for building the image can be found in the **dnsmasq** directory in the smarter-dnsmasq repository
+Instructions for building the image can be found in the **dnsmasq** directory in the smarter-dnsmasq repository.
 
 
 ## Loopback
@@ -47,11 +46,11 @@ The **cni** directory contains the actual CNI plugin consisting of two shell-scr
 
 ## install.sh
 
-The **install.sh** script installs the above components and will usually need to be run using sudo.
+The **install.sh** script installs the above components and will usually need to be run using sudo:
 
 ``sudo ./install.sh``
 
-1. Runs ```install_loopback.sh`` to install the CNI loopback plugin
+1. Runs **install_loopback.sh** to install the CNI loopback plugin
 2. Copies the c2d plugins into the default directory (/opt/cni/bin)
 3. Copies the CNI configuration for the c2d plugin into the default directory (/opt/cni/net.d)
 4. Stops any running instance of the mydns container if present
