@@ -2,19 +2,31 @@
 
 set -e
 
+# detect which distro
+DISTRO=`( lsb_release -ds || cat /etc/*release ) 2>/dev/null | head -n1 | tr '[:upper:]' '[:lower:]'`
+
+case "$DISTRO" in
+    *ubuntu*) echo "Using apt" ;;
+    *debian*) echo "Using apt" ;;
+    *raspbian*) echo "Using apt" ;;
+    *) echo "Installation for $DISTRO not supported by this script"
+    exit 1;;
+esac
+
+
 K8S_APT_FILE="/etc/apt/sources.list.d/kubernetes.list"
 
 apt-get -y install curl
-
+    
 if [ -f $K8S_APT_FILE ]; then 
-echo "Using existing k8s repo"
+  echo "Using existing k8s repo"
 else
 cat <<EOF | tee $K8S_APT_FILE
 deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-fi
-
+curl  -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+fi       
+         
 rm -f *.deb
 rm -rf opt
 apt-get update
@@ -36,4 +48,5 @@ if [ -f $DEB ]; then
 else
   echo "Could not find kubernetes-cni pkg file"       
 fi       
+
 
