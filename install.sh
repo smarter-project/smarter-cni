@@ -6,7 +6,7 @@ NETWORK_SETUP="172.38.0.0/16"
 GATEWAY_SETUP="172.38.0.1"
 DNS_IP="172.38.0.2"
 
-IMAGE_TO_USE="registry.gitlab.com/arm-research/smarter/smarter-dnsmasq:0.1"
+IMAGE_TO_USE="registry.gitlab.com/arm-research/smarter/smarter-dnsmasq:v0.5.1"
 
 
 apt-get -y install jq

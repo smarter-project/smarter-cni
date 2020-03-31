@@ -27,7 +27,7 @@ We use dnsmasq running in a docker container (named **mydns**) to provide the fa
 The container image is pulled from the public registry: ```registry.gitlab.com/arm-research/smarter/smarter-dnsmasq:v0.5.1```
 
 
-Instructions for building the image can be found in the **dnsmasq** directory.
+Instructions for building the image can be found in the **dnsmasq** directory in the smarter-dnsmasq repository
 
 
 ## Loopback
@@ -36,7 +36,7 @@ On systems running Ubuntu or Debian Linux the **install_loopback.sh** script wil
 This is done by downloading the kubernetets-cni package and extracting the loopback plugin.
 
 For systems running other versions of Linux the loopback plugin must be manually installed by either installing the appropriate package containing the CNI plugins (the name may vary) or building the
-plugin from source using the repositary: https://github.com/containernetworking/plugins and following the instructions in CONTRIBUTING.MD.
+plugin from source using the repository: https://github.com/containernetworking/plugins and following the instructions in CONTRIBUTING.MD.
 
 install_loopback.sh is invoked from the install.sh script
 
