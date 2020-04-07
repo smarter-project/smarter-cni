@@ -6,27 +6,7 @@ NETWORK_SETUP="172.38.0.0/16"
 GATEWAY_SETUP="172.38.0.1"
 DNS_IP="172.38.0.2"
 
-case `uname -m` in
-	aarch64)
-		ARCHITECTURE="arm64v8";
-		FILE_TO_LOAD_IMAGE=arm64v8_dnsmasq-0.1.tar.gz
-		IMAGE_TO_USE="arm64v8/dnsmasq:0.1"
-		;;
-	armv7l)
-		ARCHITECTURE="arm32v6";
-		FILE_TO_LOAD_IMAGE=arm32v6_dnsmasq-0.1.tar.gz
-		IMAGE_TO_USE="arm32v6/dnsmasq:0.1"
-		;;
-	x86_64)
-		ARCHITECTURE="amd64"
-		FILE_TO_LOAD_IMAGE=dnsmasq-0.1.tar.gz
-		IMAGE_TO_USE="dnsmasq:0.1"
-		;;
-	*)
-		echo "I do not recognize the architecture of the machine "`uname -m`
-		exit 1
-		;;
-esac
+IMAGE_TO_USE="registry.gitlab.com/arm-research/smarter/smarter-dnsmasq/smarter-dnsmasq:v0.5.1"
 
 
 apt-get -y install jq
@@ -35,9 +15,12 @@ cd cni
 cp c2d.conf /etc/cni/net.d
 mkdir -p /opt/cni/bin
 cp c2d c2d-inner /opt/cni/bin
-cp ../${ARCHITECTURE}/loopback /opt/cni/bin
+
 cd ..
-chmod a+x /opt/cni/bin/c2d /opt/cni/bin/c2d-inner /opt/cni/bin/loopback
+chmod a+x /opt/cni/bin/c2d /opt/cni/bin/c2d-inner 
+
+./install_loopback.sh
+
 cat <<EOF | tee /usr/bin/cni-iot-start
 #!/bin/bash
 

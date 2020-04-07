@@ -24,25 +24,21 @@ Docker provides an automatically enabled, embedded DNS resolver (127.0.0.11) for
 
 We use dnsmasq running in a docker container (named **mydns**) to provide the facility for pods that use host-networking to find a deployed pod by name.
 
-Prebuilt docker images are provided for three Linux platforms:
+The container image is pulled from the public registry: ```registry.gitlab.com/arm-research/smarter/smarter-dnsmasq/smarter-dnsmasq:v0.5.1```
 
-|File | Platform |
-|:---------|------|
-|arm32v6_dnsmasq-0.1.targz | 32-bit Arm |
-|arm64v8_dnsmasq-0.1.tar.gz | 64-bit Arm |
-|dnsmasq-0.1.tar.gz | 64-bit x86 |
-
-
-Instructions for building the images for each of the platforms can be found in the **dnsmasq** directory.
+Instructions for building the image can be found in the **dnsmasq** directory in the smarter-dnsmasq repository.
 
 
 ## Loopback
 
-The standard CNI **loopback** plugin is provided as a binary for each of the platforms in the relevant directory:
+On systems running Ubuntu or Debian Linux the **install_loopback.sh** script will install the standard CNI **loopback** plugin into the default directory for CNI plugins ```/opt/cni/bin```
+This is done by downloading the kubernetets-cni package and extracting the loopback plugin.
 
-* arm32v6
-* arm64v8
-* amd64
+For systems running other versions of Linux the loopback plugin must be manually installed by either installing the appropriate package containing the CNI plugins (the name may vary) or building the
+plugin from source using the repository: https://github.com/containernetworking/plugins and following the instructions in CONTRIBUTING.MD.
+
+install_loopback.sh is invoked from the install.sh script
+
 
 ## cni
 
@@ -50,16 +46,17 @@ The **cni** directory contains the actual CNI plugin consisting of two shell-scr
 
 ## install.sh
 
-The **install.sh** script installs the above components and will usually need to be run using sudo.
+The **install.sh** script installs the above components and will usually need to be run using sudo:
 
 ``sudo ./install.sh``
 
-1. Copies the CNI loopback and c2d plugins into the default directory (/opt/cni/bin)
-2. Copies the CNI configuration for the c2d plugin into the default directory (/opt/cni/net.d)
-3. Stops any running instance of the mydns container if present
-4. Ensures that the dnsmasq docker image is available
-5. Creates the docker user-defined network **mynet**
-5. Starts the mydns container connected to mynet
+1. Runs **install_loopback.sh** to install the CNI loopback plugin
+2. Copies the c2d plugins into the default directory (/opt/cni/bin)
+3. Copies the CNI configuration for the c2d plugin into the default directory (/opt/cni/net.d)
+4. Stops any running instance of the mydns container if present
+5. Ensures that the dnsmasq docker image is available
+6. Creates the docker user-defined network **mynet**
+7. Starts the mydns container connected to mynet
 
 
 
