@@ -1,2 +1,8 @@
 *~
 \#*\#
+/plugins
+/build/host/opt
+/build/lib
+/build/var
+quick-install.yaml
+run_as_docker
