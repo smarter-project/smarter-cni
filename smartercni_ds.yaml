@@ -17,40 +17,38 @@ spec:
         k8s-app: smarter-cni
     spec:
       containers:
-        command:
-        - smarter-cni-run
-        image: "smartercni:1.0"
-        imagePullPolicy: IfNotPresent
-        lifecycle:
-          postStart:
-            exec:
-              command:
-              - "/smarter-cni-install.sh"
-              - "--enable-debug=false"
-          preStop:
-            exec:
-              command:
-              - /smarter-cni-uninstall.sh
-        name: smarter-cni-agent
-        securityContext:
-          capabilities:
-            add:
-            - NET_ADMIN
-            - SYS_MODULE
-          privileged: true
-        volumeMounts:
-        - mountPath: /var/run/smartercni
-          name: smartercni-run
-        - mountPath: /host/opt/cni/bin
-          name: cni-path
-        - mountPath: /host/etc/cni/net.d
-          name: etc-cni-netd
-        - mountPath: /lib/modules
-          name: lib-modules
-          readOnly: true
-        - mountPath: /run/xtables.lock
-          name: xtables-lock
+        - name: smarter-cni-agent      
+          image: registry.gitlab.com/arm-research/smarter/smarter-cni:v0.1
+          imagePullPolicy: Always
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /uninstall.sh
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN
+              - SYS_MODULE
+            privileged: true
+          volumeMounts:
+          - mountPath: /var/run/smartercni
+            name: smartercni-run
+          - mountPath: /opt/cni
+            name: cni-path
+          - mountPath: /etc/cni
+            name: etc-cni-netd
+          - mountPath: /lib/modules
+            name: lib-modules
+            readOnly: true
+          - mountPath: /run/xtables.lock
+            name: xtables-lock
+      restartPolicy: Always
+      priorityClassName: system-node-critical
       hostNetwork: true
+      tolerations:
+      - operator: Exists
+        effect: NoSchedule
       volumes:
         # To keep state between restarts / upgrades
       - hostPath:
@@ -59,12 +57,12 @@ spec:
         name: smartercni-run	  
       # To install cni plugin in the host
       - hostPath:
-          path:  /opt/cni/bin
+          path:  /host/opt/cni
           type: DirectoryOrCreate
         name: cni-path
         # To install cni configuration in the host
       - hostPath:
-          path: /etc/cni/net.d
+          path: /host/etc/cni
           type: DirectoryOrCreate
         name: etc-cni-netd
         # To be able to load kernel modules
@@ -76,8 +74,4 @@ spec:
           path: /run/xtables.lock
           type: FileOrCreate
         name: xtables-lock
-  updateStrategy:
-    rollingUpdate:
-      maxUnavailable: 2
-    type: RollingUpdate
 ---

@@ -1,9 +1,9 @@
 FROM debian:stable-slim as build
 
 
-ADD . /
-
-
+COPY host /host
+COPY smartercni.sh /smartercni.sh
+COPY uninstall.sh /uninstall.sh
 
 ENTRYPOINT ["/smartercni.sh"]
 

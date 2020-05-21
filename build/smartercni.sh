@@ -1,5 +1,9 @@
 #!/bin/bash
 
-echo "Mounted CNI plugins into standard locations"
+echo "Copying CNI plugins into host locations"
+cp -r /host/etc/cni /etc
+cp -r /host/opt/cni /opt
+
+echo "Done"
 
 while true; do :; done & kill -STOP $! && wait $!
