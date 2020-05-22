@@ -1,8 +1,66 @@
 # smarter-cni - A Kubernetes CNI for IoT with Edge Compute
 
+
+
+## Install Go 
+
+  sudo apt-get install goland
+
+##  Checkout and build the CNI plugins
+
+  git clone https://github.com/containernetworking/plugins.git
+
+  cd plugins
+
+  ./build_linux.sh
+
+
+## Copy the plugins into the image build directory
+
+cp bin/*  ../build/host/opt/cni/bin
+
+
+docker build -t registry.gitlab.com/arm-research/smarter/smarter-cni:v0.2 .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## README
 
 This repo contains information required to build and install the smarter-cni.
+
+
+https://github.com/coredns/coredns
+
+
+
+
 
 We assume that docker is already installed.
 

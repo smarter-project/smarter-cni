@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: smarter-cni-agent      
-          image: registry.gitlab.com/arm-research/smarter/smarter-cni:v0.1
+          image: registry.gitlab.com/arm-research/smarter/smarter-cni:v0.2
           imagePullPolicy: Always
           lifecycle:
             preStop:
