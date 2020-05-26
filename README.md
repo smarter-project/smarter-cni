@@ -5,8 +5,7 @@
 This repo contains information required to build and install the smarter-cni.
 
 
-## About smarter-cniKubernetes
-
+## About smarter-cni
 ### Networking
 The networking configuration for a node (Edge Gateway) using smarter-cni can be viewed in two ways:
 
@@ -20,29 +19,14 @@ A separate repo: <https://gitlab.com/arm-research/smarter/smarterdns> provides a
 Process runnning natively on the node can query this DNS server also.
 
 
-## Building the container image
-
-checkout the repo: 
-
-    git clone git@gitlab.com:arm-research/smarter/smarter-cni.git
-    git checkout cadeniyi
-
-
-The easiest way to do this is by using the multi-arch building functionality in docker (an experimental feature)
-
-    docker buildx create --use --name mybuild
-    cd build
-    docker buildx build --platform linux/arm64/v8,linux/arm/v7,linux/amd64 -t registry.gitlab.com/arm-research/smarter/smarter-cni:v0.2 --push .
-
-The file `build/bridge.conf` contains the configuration for the bridge network created for smarter-cni. The "subnet" parameter must match the `--cluster-cidr' value used when starting the Kubernetes master. The "gateway" parameter must match the subnet appropriately.
-
-
 ## Deployment
 
 ### On the node
-Deploying this container onto a Kubernetes node will provide the CNI binaries used by the Container Runtime Interface (CRI) to deploy Kubernetes pods on that node.
+Deploying this container onto a Kubernetes node will provide the CNI binaries and configuration used by the Container Runtime Interface (CRI) to deploy Kubernetes pods on that node.
+For this reason smarter-cni should be the first deployement onto the node.
 
-The container runtime (usually containerd which we assume is installed) must be configured to find the CNI plugin binaries. This is often done by editing the file:  `/etc/containrd/config.toml`
+
+The container runtime (usually `containerd` which we assume is installed) must be configured to find the CNI plugin binaries. This can usually be done by editing the file:  `/etc/containrd/config.toml`
 
 If this file does not exist then it can be genrerated running:
 
@@ -58,5 +42,25 @@ Then edit the section for the CRI CNI plugins to:
 
 ### On the master
 
-Deploy the smartercni DaemonSet using the smartercni_ds.yaml. A smarter-cni Pod should be created on every node in the cluster.
+Deploy the smarter-cni DaemonSet using the smartercni_ds.yaml. A smarter-cni Pod should be created on every node in the cluster. For example using k3s:
+
+	k3s kubectl apply -f smartercni_ds.yaml
+
+
+## Building the smarter-cni container image
+
+checkout the repo: 
+
+    git clone git@gitlab.com:arm-research/smarter/smarter-cni.git
+    git checkout cadeniyi
+
+
+The easiest way to do this is by using the multi-arch building functionality in docker (an experimental feature)
+
+    docker buildx create --use --name mybuild
+    cd build
+    docker buildx build --platform linux/arm64/v8,linux/arm/v7,linux/amd64 -t registry.gitlab.com/arm-research/smarter/smarter-cni:v0.2 --push .
+
+The file `build/bridge.conf` contains the configuration for the bridge network created for smarter-cni. The "subnet" parameter must match the `--cluster-cidr' value used when starting the Kubernetes master. The "gateway" parameter must match the subnet appropriately.
+
 
