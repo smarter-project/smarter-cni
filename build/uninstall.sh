@@ -2,7 +2,12 @@
 
 echo "Removing CNI plugins from host locations"
 
-rm -rf /etc/cni/net.d
-rm -rf /opt/cni/bin
+# if we installed the smarter loopback then remove it
+if [ ! -f /opt/cni/bin/smarter_loopback ];
+   rm /opt/cni/bin/loopback
+fi
+
+rm -rf /etc/cni/net.d/smarter-bridge.conf
+rm -rf /opt/cni/bin/smarter*
 
 echo "Done"

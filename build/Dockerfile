@@ -14,9 +14,11 @@ FROM debian:stable-slim
 RUN mkdir -p /host/opt/cni/bin 
 RUN mkdir -p /host/etc/cni/net.d
 
-COPY --from=build /plugins/bin/* /host/opt/cni/bin/
+COPY --from=build /plugins/bin/bridge     /host/opt/cni/bin/smarter-bridge
+COPY --from=build /plugins/bin/host-local /host/opt/cni/bin/smarter-host-local
+COPY --from=build /plugins/bin/loopback /host/opt/cni/bin/smarter-loopback
 
-COPY bridge.conf /host/etc/cni/net.d
+COPY smarter-bridge.conf /host/etc/cni/net.d
 COPY smartercni.sh /smartercni.sh
 COPY uninstall.sh /uninstall.sh
 
