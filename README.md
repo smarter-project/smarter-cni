@@ -47,7 +47,7 @@ The easiest way to do this is by using the multi-arch building functionality in 
     cd build
     docker buildx build --platform linux/arm64/v8,linux/arm/v7,linux/amd64 -t registry.gitlab.com/arm-research/smarter/smarter-cni:v0.2 --push .
 
-The YAML file `smartercni_ds.yaml` contains a ConfigMap "smartercniconfig" which contains some default values: `172.38.0.0/16` for the subnet and `172.38.0.1` for the gateway. These values are substituted into the configuration file for the bridge netwqork created by snmarter-cni: `smarter-bridge.conf`
+The YAML file `smartercni_ds.yaml` contains a ConfigMap "smartercniconfig" which contains some default values: `172.38.0.0/16` for the subnet and `172.38.0.1` for the gateway. These values are substituted into the configuration file for the bridge network created by snmarter-cni: `smarter-bridge.conf`
 
 *The "subnet" parameter must match the `--cluster-cidr` value used when starting the Kubernetes master. The `gateway` parameter must match the `subnet` appropriately.*
 
