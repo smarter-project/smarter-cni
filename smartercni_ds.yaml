@@ -4,8 +4,8 @@ metadata:
   name: smartercniconfig
   namespace: kube-system
 data:
-  CIDR: "172.39.0.0/16"
-  GW:   "172.39.0.1"
+  CIDR: "172.38.0.0/16"
+  GW:   "172.38.0.1"
 ---
 apiVersion: apps/v1
 kind: DaemonSet
