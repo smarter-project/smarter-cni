@@ -3,7 +3,7 @@
 echo "Removing CNI plugins from host locations"
 
 # if we installed the smarter loopback then remove it
-if [ ! -f /opt/cni/bin/smarter_loopback ];
+if [ ! -f /opt/cni/bin/smarter_loopback ]; then
    rm /opt/cni/bin/loopback
 fi
 
