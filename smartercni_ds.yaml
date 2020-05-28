@@ -26,7 +26,7 @@ spec:
         k8s-app: smarter-cni
     spec:
       containers:
-        - name: smarter-cni-agent      
+        - name: smarter-cni
           image: registry.gitlab.com/arm-research/smarter/smarter-cni:v1.0
           imagePullPolicy: Always
           lifecycle:
@@ -41,17 +41,10 @@ spec:
               - SYS_MODULE
             privileged: true
           volumeMounts:
-          - mountPath: /var/run/smartercni
-            name: smartercni-run
           - mountPath: /opt/cni
             name: cni-path
           - mountPath: /etc/cni
             name: etc-cni-netd
-          - mountPath: /lib/modules
-            name: lib-modules
-            readOnly: true
-          - mountPath: /run/xtables.lock
-            name: xtables-lock
           envFrom:
           - configMapRef:
               name: smartercniconfig
@@ -62,11 +55,6 @@ spec:
       - operator: Exists
         effect: NoSchedule
       volumes:
-        # To keep state between restarts / upgrades
-      - hostPath:
-          path: /var/run/smartercni
-          type: DirectoryOrCreate
-        name: smartercni-run	  
       # To install cni plugin in the host
       - hostPath:
           path:  /opt/cni
@@ -77,13 +65,4 @@ spec:
           path: /etc/cni
           type: DirectoryOrCreate
         name: etc-cni-netd
-        # To be able to load kernel modules
-      - hostPath:
-          path: /lib/modules
-        name: lib-modules
-        # To access iptables concurrently with other processes (e.g. kube-proxy)
-      - hostPath:
-          path: /run/xtables.lock
-          type: FileOrCreate
-        name: xtables-lock
 ---
