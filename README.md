@@ -23,21 +23,7 @@ Process runnning natively on the node can query this DNS server also.
 
 ### On the node
 Deploying this container onto a Kubernetes node will provide the CNI binaries and configuration used by the Container Runtime Interface (CRI) to deploy Kubernetes pods on that node.
-For this reason smarter-cni should be the first deployement onto the node.
-
-
-The container runtime (usually `containerd` which we assume is installed) must be configured to find the CNI plugin binaries. This can usually be done by editing the file:  `/etc/containrd/config.toml`
-
-If this file does not exist then it can be genrerated running:
-
-    sudo containerd config default > /etc/containerd/config.toml
-
-Then edit the section for the CRI CNI plugins to:
-
-    [plugins.cri.cni]
-          bin_dir = "/host/opt/cni/bin"
-          conf_dir = "/host/etc/cni/net.d"
-          conf_template = ""
+For this reason smarter-cni should be the first deployment onto the node.
 
 
 ### On the master
@@ -61,6 +47,9 @@ The easiest way to do this is by using the multi-arch building functionality in 
     cd build
     docker buildx build --platform linux/arm64/v8,linux/arm/v7,linux/amd64 -t registry.gitlab.com/arm-research/smarter/smarter-cni:v0.2 --push .
 
-The file `build/bridge.conf` contains the configuration for the bridge network created for smarter-cni. The "subnet" parameter must match the `--cluster-cidr' value used when starting the Kubernetes master. The "gateway" parameter must match the subnet appropriately.
+The YAML file `smartercni_ds.yaml` contains a ConfigMap "smartercniconfig" which contains some default values: `172.38.0.0/16` for the subnet and `172.38.0.1` for the gateway. These values are substituted into the configuration file for the bridge network created by snmarter-cni: `smarter-bridge.conf`
+
+*The "subnet" parameter must match the `--cluster-cidr` value used when starting the Kubernetes master. The `gateway` parameter must match the `subnet` appropriately.*
+
 
 
