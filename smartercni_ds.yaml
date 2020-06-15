@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: smarter-cni
-          image: registry.gitlab.com/arm-research/smarter/smarter-cni:v1.0
+          image: registry.gitlab.com/arm-research/smarter/smarter-cni:v1.1
           imagePullPolicy: Always
           lifecycle:
             preStop:
@@ -45,6 +45,8 @@ spec:
             name: cni-path
           - mountPath: /etc/cni
             name: etc-cni-netd
+          - mountPath: /usr/libxec/cni
+            name: alt-cni-path
           envFrom:
           - configMapRef:
               name: smartercniconfig
@@ -65,4 +67,7 @@ spec:
           path: /etc/cni
           type: DirectoryOrCreate
         name: etc-cni-netd
+      - hostPath:
+          path:  /usr/libexec/cni
+        name: alt-cni-path
 ---

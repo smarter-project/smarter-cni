@@ -2,11 +2,23 @@
 
 echo "Copying CNI plugins into host locations"
 cp -r /host/etc/cni /etc
-cp -r /host/opt/cni /opt
+
+if [ -d /usr/libexec/cni ]; then  
+    DEST_DIR="/usr/libexec/cni"
+else
+    DEST_DIR="/opt/cni/bin"
+fi
+
+echo "Destination dir: ${DEST_DIR}"
+
+cp  /host/opt/cni/smarter-bridge      ${DEST_DIR}/smarter-bridge
+cp  /host/opt/cni/smarter-host-local  ${DEST_DIR}/smarter-host-local
+
+
 
 # if there no existing loopback plugin then install the smarter one
 if [ ! -f "/opt/cni/bin/loopback" ]; then
-    mv /opt/cni/bin/smarter-loopback /opt/cni/bin/loopback
+    mv /opt/cni/bin/smarter-loopback ${DEST_DIR}/loopback
 fi
 
 
