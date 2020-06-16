@@ -11,14 +11,14 @@ fi
 
 echo "Destination dir: ${DEST_DIR}"
 
-cp  /host/opt/cni/smarter-bridge      ${DEST_DIR}/smarter-bridge
-cp  /host/opt/cni/smarter-host-local  ${DEST_DIR}/smarter-host-local
+cp  /host/opt/cni/bin/smarter-bridge      ${DEST_DIR}/smarter-bridge
+cp  /host/opt/cni/bin/smarter-host-local  ${DEST_DIR}/smarter-host-local
 
 
 
 # if there no existing loopback plugin then install the smarter one
 if [ ! -f "/opt/cni/bin/loopback" ]; then
-    mv /opt/cni/bin/smarter-loopback ${DEST_DIR}/loopback
+    cp /host/opt/cni/bin/smarter-loopback ${DEST_DIR}/loopback
 fi
 
 

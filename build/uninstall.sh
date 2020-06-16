@@ -7,7 +7,7 @@ if [ ! -f /opt/cni/bin/smarter_loopback ]; then
    rm /opt/cni/bin/loopback
 fi
 
-rm -rf /etc/cni/net.d/smarter-bridge.conf
+rm -rf /etc/cni/net.d/0-smarter-bridge.conf
 rm -rf /opt/cni/bin/smarter*
 
 echo "Remove smartnet0 bridge"

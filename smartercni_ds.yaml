@@ -45,7 +45,7 @@ spec:
             name: cni-path
           - mountPath: /etc/cni
             name: etc-cni-netd
-          - mountPath: /usr/libxec/cni
+          - mountPath: /usr/libexec/cni
             name: alt-cni-path
           envFrom:
           - configMapRef:
