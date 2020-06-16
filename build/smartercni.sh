@@ -1,7 +1,6 @@
 #!/bin/bash
 
 echo "Copying CNI plugins into host locations"
-cp -r /host/etc/cni /etc
 
 if [ -d /usr/libexec/cni ]; then  
     DEST_DIR="/usr/libexec/cni"
@@ -41,7 +40,7 @@ GW=${GW:="172.38.0.0"}
 NC=$(echo $CIDR | sed -e 's/\//\\\//')
      
 
-sed -e "s/CIDR/\"$NC\"/" /host/etc/cni/net.d/smarter-bridge.conf | sed -e "s/GW/\"$GW\"/" > /etc/cni/net.d/smarter-bridge.conf
+sed -e "s/CIDR/\"$NC\"/" /host/etc/cni/net.d/0-smarter-bridge.conf | sed -e "s/GW/\"$GW\"/" > /etc/cni/net.d/0-smarter-bridge.conf
 
 echo "Done"
 
