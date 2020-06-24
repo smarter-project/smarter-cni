@@ -2,9 +2,12 @@
 
 echo "Copying CNI plugins into host locations"
 
-if [ -d /usr/libexec/cni ]; then  
+if [ -e /usr/libexec/cni/loopback ]; then  
     DEST_DIR="/usr/libexec/cni"
 else
+    if [ ! -d /opt/cni/bin ]; then
+        mkdir -p /opt/cni/bin
+    fi 
     DEST_DIR="/opt/cni/bin"
 fi
 
@@ -30,6 +33,10 @@ if [ $status -eq 0 ]; then
     ip link delete smartnet0
 fi
    
+
+if [ ! -d /etc/cni/net.d ]; then
+    mkdir -p /etc/cni/net.d
+fi
 
 
 echo "Creating bridge configuration"
