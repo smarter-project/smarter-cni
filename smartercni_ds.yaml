@@ -47,6 +47,8 @@ spec:
             name: etc-cni-netd
           - mountPath: /usr/libexec/cni
             name: alt-cni-path
+          - mountPath: /usr/sbin/iptables
+            name: iptables
           envFrom:
           - configMapRef:
               name: smartercniconfig
@@ -70,4 +72,8 @@ spec:
       - hostPath:
           path:  /usr/libexec/cni
         name: alt-cni-path
+      - hostPath:
+          path:  /usr/sbin/iptables
+          type: File
+        name: iptables
 ---
