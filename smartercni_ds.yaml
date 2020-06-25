@@ -70,5 +70,4 @@ spec:
       - hostPath:
           path:  /usr/libexec/cni
         name: alt-cni-path
-        name: iptables
 ---
