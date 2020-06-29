@@ -24,16 +24,6 @@ if [ ! -f "/opt/cni/bin/loopback" ]; then
 fi
 
 
-echo "Remove any existing smartnet0 bridge"
-ip link show smartnet0
-status=$? 
-
-if [ $status -eq 0 ]; then
-    ip link set smartnet0 down
-    ip link delete smartnet0
-fi
-   
-
 if [ ! -d /etc/cni/net.d ]; then
     mkdir -p /etc/cni/net.d
 fi
