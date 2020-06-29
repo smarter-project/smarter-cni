@@ -24,7 +24,6 @@ COPY --from=build /plugins/bin/loopback /host/opt/cni/bin/smarter-loopback
 
 COPY 0-smarter-bridge.conf /host/etc/cni/net.d
 COPY smartercni.sh /smartercni.sh
-COPY uninstall.sh /uninstall.sh
 
 ENTRYPOINT ["/smartercni.sh"]
 
