@@ -28,6 +28,7 @@ if [ ! -d /etc/cni/net.d ]; then
     mkdir -p /etc/cni/net.d
 fi
 
+iptables-legacy -P FORWARD ACCEPT
 
 echo "Creating bridge configuration"
 
