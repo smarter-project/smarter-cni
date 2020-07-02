@@ -32,8 +32,8 @@ iptables-legacy -P FORWARD ACCEPT
 
 echo "Creating bridge configuration"
 
-CIDR=${CIDR:-"172.38.0.0/16"}
-GW=${GW:="172.38.0.0"}
+CIDR=${CIDR:-"172.39.0.0/16"}
+GW=${GW:="172.39.0.1"}
 
 NC=$(echo $CIDR | sed -e 's/\//\\\//')
      

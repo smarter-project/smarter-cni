@@ -4,8 +4,8 @@ metadata:
   name: smartercniconfig
   namespace: kube-system
 data:
-  CIDR: "172.38.0.0/16"
-  GW:   "172.38.0.1"
+  CIDR: "172.39.0.0/16"
+  GW:   "172.39.0.1"
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -25,6 +25,13 @@ spec:
       labels:
         k8s-app: smarter-cni
     spec:
+      nodeSelector:
+        smarter.cni: deploy
+      tolerations:
+        - key: "smarter.type"
+          operator: "Equal"
+          value: "edge"
+          effect: "NoSchedule"
       containers:
         - name: smarter-cni
           image: registry.gitlab.com/arm-research/smarter/smarter-cni:v1.1
@@ -48,6 +55,7 @@ spec:
       restartPolicy: Always
       priorityClassName: system-node-critical
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       tolerations:
       - operator: Exists
         effect: NoSchedule
