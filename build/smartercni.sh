@@ -28,7 +28,9 @@ if [ ! -d /etc/cni/net.d ]; then
     mkdir -p /etc/cni/net.d
 fi
 
+# set default policy for FORWARD chain
 iptables-legacy -P FORWARD ACCEPT
+
 
 echo "Creating bridge configuration"
 
@@ -39,6 +41,19 @@ NC=$(echo $CIDR | sed -e 's/\//\\\//')
      
 
 sed -e "s/CIDR/\"$NC\"/" /host/etc/cni/net.d/0-smarter-bridge.conf | sed -e "s/GW/\"$GW\"/" > /etc/cni/net.d/0-smarter-bridge.conf
+
+
+comment=smarter-dns
+
+# Remove any existing iptable rules
+echo "Removing any existing iptables rules"
+iptables-legacy -t nat -S | grep "${comment}" | sed 's/^-A //' | while read rule; do iptables-legacy -t nat -D $rule; done 
+
+# Add iptable rules for smarter-dns
+echo "Add iptable rules for smarter-dns"
+iptables-legacy -t nat -A PREROUTING -d 169.254.0.2/32 -p udp -m udp --dport 53 -m comment --comment "${comment}" -j DNAT --to-destination ${GW}
+iptables-legacy -t nat -A OUTPUT     -d 169.254.0.2/32 -p udp -m udp --dport 53 -m comment --comment "${comment}" -j DNAT --to-destination ${GW} 
+
 
 echo "Done"
 
