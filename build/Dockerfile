@@ -21,6 +21,7 @@ RUN mkdir -p /host/etc/cni/net.d
 COPY --from=build /plugins/bin/bridge     /host/opt/cni/bin/smarter-bridge
 COPY --from=build /plugins/bin/host-local /host/opt/cni/bin/smarter-host-local
 COPY --from=build /plugins/bin/loopback /host/opt/cni/bin/smarter-loopback
+COPY --from=build /plugins/bin/portmap /host/opt/cni/bin/smarter-portmap
 
 COPY 0-smarter-bridge.conflist /host/etc/cni/net.d
 COPY smartercni.sh /smartercni.sh

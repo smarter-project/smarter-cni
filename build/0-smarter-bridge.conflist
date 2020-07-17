@@ -17,7 +17,7 @@
     }
   },
   {
-     "type": "portmap",
+     "type": "smarter-portmap",
      "snat": true,
      "capabilities": {"portMappings": true}
   }
