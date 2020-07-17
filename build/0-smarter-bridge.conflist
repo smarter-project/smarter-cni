@@ -1,6 +1,8 @@
 {
     "cniVersion": "0.3.1",
     "name": "smartnet",
+    "plugins": [
+    {
     "type": "smarter-bridge",
     "bridge": "smartnet0",
     "isDefaultGateway": true,
@@ -9,12 +11,15 @@
     "hairpinMode": true,
     "ipam": {
         "type": "smarter-host-local",
-        "subnet": CIDR,
-        "gateway": GW,
+        "subnet": "172.39.0.0/16",
+        "gateway": "172.39.0.1",
         "dataDir": "/var/run/cni/networks"
-    },
-    "dns": {
-      "domain" : "cluster",
-      "search": [ "example.com" ]
+    }
+  },
+  {
+     "type": "portmap",
+     "snat": true,
+     "capabilities": {"portMappings": true}
   }
+  ]
 }
