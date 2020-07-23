@@ -1,0 +1,25 @@
+{
+    "cniVersion": "0.3.1",
+    "name": "smartnet",
+    "plugins": [
+    {
+    "type": "smarter-bridge",
+    "bridge": "smartnet0",
+    "isDefaultGateway": true,
+    "forceAddress": false,
+    "ipMasq": true,
+    "hairpinMode": true,
+    "ipam": {
+        "type": "smarter-host-local",
+        "subnet": "172.39.0.0/16",
+        "gateway": "172.39.0.1",
+        "dataDir": "/var/run/cni/networks"
+    }
+  },
+  {
+     "type": "smarter-portmap",
+     "snat": true,
+     "capabilities": {"portMappings": true}
+  }
+  ]
+}
