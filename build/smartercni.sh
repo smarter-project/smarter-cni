@@ -15,6 +15,7 @@ echo "Destination dir: ${DEST_DIR}"
 
 cp  /host/opt/cni/bin/smarter-bridge      ${DEST_DIR}/smarter-bridge
 cp  /host/opt/cni/bin/smarter-host-local  ${DEST_DIR}/smarter-host-local
+cp  /host/opt/cni/bin/smarter-portmap     ${DEST_DIR}/smarter-portmap
 
 
 
