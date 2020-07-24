@@ -4,3 +4,6 @@ include:
 
 variables:
   CI_BUILDX_ARCHS: "linux/amd64,linux/arm64,linux/arm"
+
+.pre
+  - cd build
