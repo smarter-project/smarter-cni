@@ -1,0 +1,18 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+variables:
+
+buildimages:
+  stage: build
+  tags:
+   - isr
+   before_script:
+   script:
+     cd build
+     export TS=$(date -u '+%Y%m%d%H%M%S')
+     docker buildx build --platform linux/arm64/v8,linux/arm/v7,linux/amd64 -t registry.gitlab.com/arm-research/smarter/smarter-cni:${TS} --push .
+   artifacts:   
+
