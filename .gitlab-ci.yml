@@ -5,8 +5,8 @@ include:
 variables:
   CI_BUILDX_ARCHS: "linux/amd64,linux/arm64,linux/arm"
 
-
-before_script:
+.build:
+  before_script:
     - |
       if [[ -z "$CI_COMMIT_TAG" ]]; then
         export CI_APPLICATION_REPOSITORY=${CI_APPLICATION_REPOSITORY:-$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG}
