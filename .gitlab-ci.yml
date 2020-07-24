@@ -7,27 +7,10 @@ variables:
 
 
 build:buildx-master:
-  extends: .build
-  only: 
-    refs:
-      - master
-    variables:
-      - $CI_BUILDX_ARCHS
-  script:
+  before_script:
     - cd build
-    # Use docker-container driver to allow useful features (push/multi-platform)
-    - update-binfmts --enable # Important: Ensures execution of other binary formats is enabled in the kernel
-    - docker buildx create --driver docker-container --use
-    - docker buildx inspect --bootstrap
-    - docker buildx ls
-    - docker buildx build --platform $CI_BUILDX_ARCHS --progress plain --pull -t "$CI_REGISTRY_IMAGE" --push .
 
 
 build:buildx:
-  script:
+  before_script:
     - cd build
-    - update-binfmts --enable # Important: Ensures execution of other binary formats is enabled in the kernel
-    - docker buildx create --driver docker-container --use
-    - docker buildx inspect --bootstrap
-    - docker buildx ls
-    - docker buildx build --platform $CI_BUILDX_ARCHS --progress plain --pull -t "$CI_APPLICATION_REPOSITORY:$CI_APPLICATION_TAG" --push .
