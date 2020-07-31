@@ -21,7 +21,12 @@ variables:
 stages:
   - mybuild
 
+mybuild-master:
+  extends: build:buildx-master
+  only: 
+    - tags
+
 mybuild:
   extends: build:buildx
   only: 
-    - tags
+    - tags    
