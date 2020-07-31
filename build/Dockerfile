@@ -7,7 +7,7 @@ RUN git clone https://github.com/containernetworking/plugins.git
 
 WORKDIR plugins
 
-RUN ./build_linux.sh
+RUN CGO_ENABLED=0 ./build_linux.sh
 
 FROM debian:stable-slim
 
