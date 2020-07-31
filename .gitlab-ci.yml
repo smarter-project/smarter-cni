@@ -24,4 +24,4 @@ stages:
 mybuild:
   extends: build:buildx
   only: 
-    -tags
+    - tags
