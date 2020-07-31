@@ -1,4 +1,3 @@
-
 include:
   - project: 'ericvh/gitlab-ci-arm-template'
     file: '/.gitlab-ci.yml'
@@ -19,14 +18,6 @@ variables:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     - cd build
 
-
-
-mybuild-master:
-  extends: build:buildx-master
-  only: 
-    - tags
-
-mybuild:
-  extends: build:buildx
-  only: 
-    - tags    
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG
