@@ -1,3 +1,6 @@
+stages:
+  - mybuild
+  
 include:
   - project: 'ericvh/gitlab-ci-arm-template'
     file: '/.gitlab-ci.yml'
@@ -18,8 +21,7 @@ variables:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     - cd build
 
-stages:
-  - mybuild
+
 
 mybuild-master:
   extends: build:buildx-master
