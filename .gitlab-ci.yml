@@ -18,3 +18,10 @@ variables:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     - cd build
 
+stages:
+  - mybuild
+
+mybuild:
+  extends: build:buildx
+  only: 
+    -tags
