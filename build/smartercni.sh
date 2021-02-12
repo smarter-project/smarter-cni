@@ -41,7 +41,8 @@ GW=${GW:="172.39.0.1"}
 NC=$(echo $CIDR | sed -e 's/\//\\\//')
      
 
-sed -e "s/CIDR/\"$NC\"/" /host/etc/cni/net.d/0-smarter-bridge.conflist | sed -e "s/GW/\"$GW\"/" > /etc/cni/net.d/0-smarter-bridge.conflist
+sed -e "s/CIDR/\"$NC\"/" /host/etc/cni/net.d/0-smarter-bridge.conflist | sed -e "s/GW/\"$GW\"/" > 0-smarter-bridge.conflist.tmp
+mv 0-smarter-bridge.conflist.tmp /etc/cni/net.d/0-smarter-bridge.conflist
 
 
 echo "Done"
