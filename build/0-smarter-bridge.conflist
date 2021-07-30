@@ -3,21 +3,21 @@
     "name": "smartnet",
     "plugins": [
     {
-    "type": "smarter-bridge",
+    "type": "bridge",
     "bridge": "smartnet0",
     "isDefaultGateway": true,
     "forceAddress": false,
     "ipMasq": true,
     "hairpinMode": true,
     "ipam": {
-        "type": "smarter-host-local",
+        "type": "host-local",
         "subnet": CIDR,
         "gateway": GW,
         "dataDir": "/var/run/cni/networks"
     }
   },
   {
-     "type": "smarter-portmap",
+     "type": "portmap",
      "snat": true,
      "capabilities": {"portMappings": true}
   }

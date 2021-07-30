@@ -1,8 +1,7 @@
 #!/bin/bash
 
-echo "Copying CNI plugins into host locations"
 
-if [ -e /usr/libexec/cni/loopback ]; then  
+if [ -e /usr/libexec/cni ]; then  
     DEST_DIR="/usr/libexec/cni"
 else
     if [ ! -d /opt/cni/bin ]; then
@@ -11,18 +10,20 @@ else
     DEST_DIR="/opt/cni/bin"
 fi
 
-echo "Destination dir: ${DEST_DIR}"
 
-cp  /host/opt/cni/bin/smarter-bridge      ${DEST_DIR}/smarter-bridge
-cp  /host/opt/cni/bin/smarter-host-local  ${DEST_DIR}/smarter-host-local
-cp  /host/opt/cni/bin/smarter-portmap     ${DEST_DIR}/smarter-portmap
+echo "Check for existence of CNI plugins"
+plugins=( "bridge" "host-local" "portmap" "loopback")
 
-
-
-# if there no existing loopback plugin then install the smarter one
-if [ ! -f "/opt/cni/bin/loopback" ]; then
-    cp /host/opt/cni/bin/smarter-loopback ${DEST_DIR}/loopback
-fi
+for p in "${plugins[@]}"
+do
+    echo -n "Looking for ${p} in ${DEST_DIR} - "
+    if [ ! -e ${DEST_DIR}/${p} ]; then
+        echo "Not found - Installing $p"
+        cp  /host/opt/cni/bin/${p}      ${DEST_DIR}/${p}
+    else
+	echo "Found"
+    fi
+done
 
 
 if [ ! -d /etc/cni/net.d ]; then
