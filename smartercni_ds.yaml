@@ -56,6 +56,9 @@ spec:
       priorityClassName: system-node-critical
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
+      tolerations:
+       - operator: Exists
+         effect: NoSchedule
       volumes:
       # To install cni plugin in the host
       - hostPath:
