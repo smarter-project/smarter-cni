@@ -1,0 +1,13 @@
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from our common library chart. You can check the default values/options here:
+# https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
+#
+
+image:
+  repository: registry.gitlab.com/arm-research/smarter/smarter-cni
+  #repository: registry.gitlab.com/smarter-project/smarter-cni
+  # @default -- chart.appVersion
+  tag: ""
+  pullPolicy: IfNotPresent
