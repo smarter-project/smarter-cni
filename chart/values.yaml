@@ -1,0 +1,13 @@
+#
+#
+
+application:
+  namespace: smarter
+  appName: smarter-cni
+  configMapName: smarter-cni-config
+
+image:
+  repository: registry.gitlab.com/arm-research/smarter/smarter-cni
+  # @default -- chart.appVersion
+  tag: ""
+  pullPolicy: IfNotPresent
