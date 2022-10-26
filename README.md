@@ -14,7 +14,7 @@ The networking configuration for a node (Edge Gateway) using smarter-cni can be 
 
 ### DNS
 
-A separate repo: <https://gitlab.com/arm-research/smarter/smarter-dns> provides a DNS server that enables Kubernetes pods to discover the IP address of pods running on the same node via their "hostname" (as defined in the Pod YAML description).
+A separate repo: <https://gitlab.com/smarter-project/smarter-dns> provides a DNS server that enables Kubernetes pods to discover the IP address of pods running on the same node via their "hostname" (as defined in the Pod YAML description).
 Processes runnning natively on the node can query this DNS server also.
 
 
@@ -29,9 +29,16 @@ This can be added using:
 
 `k3s kubectl label <NODENAME> smarter.cni=deploy`
 
-
-
 ### On the server
+
+#### Using helm
+
+A helm chart is provided at chart directory of the repository
+```
+helm install smarter-cni chart
+```
+
+#### Using Yaml file
 
 The YAML file `smartercni_ds.yaml` contains a ConfigMap "smartercniconfig" which contains some default values for Linux bridge created by smarter-cni: 
 
@@ -52,13 +59,13 @@ Deploy the smarter-cni DaemonSet using the smartercni_ds.yaml. A smarter-cni Pod
 
 checkout the repo: 
 
-    git clone git@gitlab.com:arm-research/smarter/smarter-cni.git
+    git clone https://gitlab.com/smarter-project/smarter-cni.git
 
 The easiest way to do this is by using the multi-arch building functionality in docker (an experimental feature)
 
     docker buildx create --use --name mybuild
     cd build
-    docker buildx build --platform linux/arm64/v8,linux/arm/v7,linux/amd64 -t registry.gitlab.com/arm-research/smarter/smarter-cni:vX.X --push .
+    docker buildx build --platform linux/arm64/v8,linux/arm/v7,linux/amd64 -t registry.gitlab.com/smarter-project/smarter-cni:vX.X --push .
 
 
 
