@@ -49,6 +49,9 @@ spec:
             name: etc-cni-netd
           - mountPath: /usr/libexec/cni
             name: alt-cni-path
+          env:
+          - name: DEST_DIR
+            value: "/opt/cni/bin"
           envFrom:
           - configMapRef:
               name: {{ .Values.application.configMapName }}

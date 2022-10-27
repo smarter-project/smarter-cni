@@ -1,15 +1,18 @@
 #!/bin/bash
 
-
-if [ -e /usr/libexec/cni ]; then  
-    DEST_DIR="/usr/libexec/cni"
-else
-    if [ ! -d /opt/cni/bin ]; then
-        mkdir -p /opt/cni/bin
-    fi 
-    DEST_DIR="/opt/cni/bin"
+if [ -z "${DEST_DIR}" ]
+then
+    if [ -e /usr/libexec/cni ]; then  
+	DEST_DIR="/usr/libexec/cni"
+    else
+	DEST_DIR="/opt/cni/bin"
+    fi
 fi
 
+if [ ! -d "${DEST_DIR}" ]
+then
+    mkdir -p "${DEST_DIR}"
+fi 
 
 echo "Check for existence of CNI plugins"
 plugins=( "bridge" "host-local" "portmap" "loopback")
