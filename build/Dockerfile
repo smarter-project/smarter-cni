@@ -1,7 +1,7 @@
 FROM debian:stable-slim as build
 
-RUN apt-get update && apt-get -uy upgrade
-RUN apt-get install -y golang git
+RUN echo "deb http://ftp.de.debian.org/debian bullseye-backports main" >>  /etc/apt/sources.list && apt-get update && apt-get -uy upgrade
+RUN apt-get install -y golang-1.17 git && ln -s /usr/lib/go-1.17/bin/go /usr/bin/go
 
 RUN git clone https://github.com/containernetworking/plugins.git
 
