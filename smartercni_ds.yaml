@@ -34,7 +34,7 @@ spec:
           effect: "NoSchedule"
       containers:
         - name: smarter-cni
-          image: registry.gitlab.com/smarter-project/smarter-cni:v1.33
+          image: registry.gitlab.com/smarter-project/smarter-cni:v1.34
           imagePullPolicy: Always
           securityContext:
             capabilities:

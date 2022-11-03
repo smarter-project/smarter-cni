@@ -3,7 +3,7 @@ name: smarter-cni
 description: smarter-cni chart for SMARTER edge devices
 home: https://gitlab.com/smarter-project/smarter-cni
 version: 0.0.1
-appVersion: v1.33
+appVersion: v1.34
 kubeVersion: ">=1.16.0-0"
 keywords:
   - kubernetes
