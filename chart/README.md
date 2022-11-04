@@ -18,6 +18,10 @@ The networking configuration for a node (Edge Gateway) using smarter-cni can be 
 
 - Internal view: smarter-cni uses a Linux bridge network to which all the Kubernetes pods are connected via virtual interfaces (only pods that use host networking do not have a virtual interface). Each deployed (non-host networked) pod has an interface allocated from this network, receiving an allocated address from within the range of the network.
 
+## Values
+
+The configuration.nodeSelector value allows the nodeSelector to be changed in a higher level chart simplyfyng deploying multiple services at the same time; CNI, DNS and device-manager with a single label for example.
+
 ### DNS
 
 A seperate chart (smarter-dns) is available to provide a DNS server that enables Kubernetes pods to discover the IP address of pods running on the same node via their "hostname" (as defined in the Pod YAML description).
