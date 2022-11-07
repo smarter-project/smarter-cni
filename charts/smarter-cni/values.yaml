@@ -7,7 +7,7 @@ application:
   configMapName: smarter-cni-config
 
 image:
-  repository: registry.gitlab.com/smarter-project/smarter-cni
+  repository: ghcr.io/smarter-project/smarter-cni
   # @default -- chart.appVersion
   tag: ""
   pullPolicy: IfNotPresent
