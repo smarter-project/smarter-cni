@@ -2,7 +2,6 @@
 #
 
 application:
-  namespace: smarter
   appName: smarter-cni
   configMapName: smarter-cni-config
 
@@ -14,4 +13,4 @@ image:
 
 configuration:
   nodeSelector:
-    smarter-cni: enabled
+    smarter.cni: enabled
