@@ -24,7 +24,11 @@ spec:
         k8s-app: {{ .Values.application.appName }}
     spec:
       nodeSelector:
-        {{- toYaml .Values.configuration.nodeSelector | nindent 8 }}
+        {{- if .Values.nodeSelector }}
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+        {{- else }}
+        smarter.cni: enabled
+        {{- end }}
       tolerations:
         - key: "smarter.type"
           operator: "Equal"
