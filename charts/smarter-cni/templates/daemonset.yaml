@@ -18,8 +18,6 @@ spec:
       k8s-app: {{ .Values.application.appName }}
   template:
     metadata:
-      annotations:
-        scheduler.alpha.kubernetes.io/critical-pod: ""
       labels:
         k8s-app: {{ .Values.application.appName }}
     spec:
@@ -29,6 +27,7 @@ spec:
         {{- else }}
         smarter.cni: enabled
         {{- end }}
+      priorityClassName: "system-node-critical"
       tolerations:
         - key: "smarter.type"
           operator: "Equal"
