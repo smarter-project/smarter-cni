@@ -14,7 +14,7 @@ The networking configuration for a node (Edge Gateway) using smarter-cni can be 
 
 ### DNS
 
-A separate repo: <https://gitlab.com/smarter-project/smarter-dns> provides a DNS server that enables Kubernetes pods to discover the IP address of pods running on the same node via their "hostname" (as defined in the Pod YAML description).
+A separate repo: <https://github.com/smarter-project/smarter-dns> provides a DNS server that enables Kubernetes pods to discover the IP address of pods running on the same node via their "hostname" (as defined in the Pod YAML description).
 Processes runnning natively on the node can query this DNS server also.
 
 
@@ -27,7 +27,9 @@ For this reason smarter-cni would usually be one of the first deployed pods on a
 For smarter-cni to be scheduled to run on a node, the node must have the 'smarter.cni=deploy' label
 This can be added using:
 
-`k3s kubectl label <NODENAME> smarter.cni=deploy`
+```
+k3s kubectl label <NODENAME> smarter.cni=deploy
+```
 
 ### On the server
 
@@ -52,20 +54,23 @@ These values are substituted into the configuration file for the bridge network 
 
 Deploy the smarter-cni DaemonSet using the smartercni_ds.yaml. A smarter-cni Pod should be created on every node in the cluster with the `smarter.cni=deploy` label. For example using k3s:
 
+```
 	k3s kubectl apply -f smartercni_ds.yaml
+```
 
 
 ## Building the smarter-cni container image
 
 checkout the repo: 
 
-    git clone https://gitlab.com/smarter-project/smarter-cni.git
+```
+    git clone https://github.com/smarter-project/smarter-cni.git
+```
 
 The easiest way to do this is by using the multi-arch building functionality in docker (an experimental feature)
 
+```
     docker buildx create --use --name mybuild
     cd build
-    docker buildx build --platform linux/arm64/v8,linux/arm/v7,linux/amd64 -t registry.gitlab.com/smarter-project/smarter-cni:vX.X --push .
-
-
-
+    docker buildx build --platform linux/arm64/v8,linux/arm/v7,linux/amd64 -t ghcr.io/smarter-project/smarter-cni:vX.X --push .
+```
