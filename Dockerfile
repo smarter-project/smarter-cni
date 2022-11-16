@@ -5,7 +5,7 @@ FROM golang:1.17 as build
 
 WORKDIR /root
 
-RUN git clone https://github.com/containernetworking/plugins.git
+RUN git clone https://github.com/containernetworking/plugins.git --branch v1.1.1
 
 WORKDIR /root/plugins
 
