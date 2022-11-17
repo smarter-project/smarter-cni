@@ -6,7 +6,7 @@ For more information view https://getsmarter.io
 ## TL;DR
 
 ```console
-helm repo add smarter https://smarter-project.gitlab.io/documentation/charts
+helm repo add smarter https://smarter-project.github.io/documentation
 helm install my-smarter-cni smarter-cni
 ```
 
