@@ -18,9 +18,7 @@ RUN CGO_ENABLED=0 ./build_linux.sh
 
 FROM debian:stable-slim
 
-
-RUN apt-get update
-RUN apt-get install -y iptables
+RUN apt-get update -y;apt-get -y upgrade;apt-get install -y iptables;apt-get clean
 
 RUN mkdir -p /host/opt/cni/bin 
 RUN mkdir -p /host/etc/cni/net.d
@@ -34,4 +32,3 @@ COPY 0-smarter-bridge.conflist /host/etc/cni/net.d
 COPY smartercni.sh /smartercni.sh
 
 ENTRYPOINT ["/smartercni.sh"]
-
