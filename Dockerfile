@@ -5,7 +5,12 @@ FROM golang:1.17 as build
 
 WORKDIR /root
 
-RUN git clone https://github.com/containernetworking/plugins.git --branch v1.1.1
+RUN git clone https://github.com/containernetworking/plugins.git 
+WORKDIR plugins
+COPY my_patch .
+RUN git apply my_patch
+
+WORKDIR /root
 
 WORKDIR /root/plugins
 
