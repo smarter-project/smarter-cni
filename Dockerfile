@@ -16,11 +16,8 @@ WORKDIR /root/plugins
 
 RUN CGO_ENABLED=0 ./build_linux.sh
 
-FROM debian:stable-slim
-
-
-RUN apt-get update
-RUN apt-get install -y iptables
+FROM alpine:latest
+RUN apk -U upgrade && apk add iptables bash
 
 RUN mkdir -p /host/opt/cni/bin 
 RUN mkdir -p /host/etc/cni/net.d
