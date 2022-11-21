@@ -34,7 +34,7 @@ spec:
           effect: "NoSchedule"
       containers:
         - name: smarter-cni
-          image: ghcr.io/smarter-project/smarter-cni:v1.34.0
+          image: ghcr.io/smarter-project/smarter-cni:v1.34.2
           imagePullPolicy: Always
           securityContext:
             capabilities:
