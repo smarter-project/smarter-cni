@@ -2,8 +2,8 @@ apiVersion: v2
 name: smarter-cni
 description: smarter-cni chart for SMARTER edge devices
 home: https://getsmarter.io
-version: 0.0.7
-appVersion: v1.34.3
+version: 0.0.8
+appVersion: v1.34.4
 kubeVersion: ">=1.16.0-0"
 keywords:
   - kubernetes
