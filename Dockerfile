@@ -4,13 +4,12 @@ WORKDIR /root
 
 RUN git clone https://github.com/containernetworking/plugins.git 
 WORKDIR plugins
-COPY my_patch .
-RUN git apply my_patch
 
 WORKDIR /root
 
 WORKDIR /root/plugins
 
+RUN go get golang.org/x/sys@v0.2.0 &&  go get github.com/vishvananda/netlink@v1.2.1-beta.2 && go mod tidy && go mod vendor
 RUN CGO_ENABLED=0 ./build_linux.sh
 
 FROM alpine:latest
